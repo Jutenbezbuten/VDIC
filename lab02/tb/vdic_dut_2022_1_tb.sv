@@ -77,15 +77,13 @@ vdic_dut_2022 DUT(.clk, .rst_n, .enable_n, .din, .dout, .dout_valid);
 //---------------------------------
 //COVERAGE
 //---------------------------------
-operation_t          op_set;
-assign op = op_set;
 
 // Covergroup checking the op codes and their sequences
 covergroup op_cov;
 
     option.name = "op_cov";
 
-    cov_op: coverpoint op_set {
+    cov_op: coverpoint curr_cmd {
         // #A1 test all operations
         bins A1_single_cycle[] = {[CMD_NOP:CMD_SUB]};
 	    ignore_bins null_ops = {CMD_INV};
@@ -100,7 +98,7 @@ covergroup zeros_or_ones_on_ops;
 
     option.name = "zeros_or_ones_on_ops";
 
-    all_ops : coverpoint op_set {
+    all_ops : coverpoint curr_cmd {
         ignore_bins null_ops = {CMD_NOP, CMD_INV};
     }
 
@@ -175,7 +173,7 @@ covergroup rst_ops;
 
     option.name = "rst_ops";
 
-    ops_rst: coverpoint op_set {
+    ops_rst: coverpoint curr_cmd {
         // #A1 test all operations
         bins A1_single_cycle[] = {CMD_AND,CMD_ADD,CMD_XOR,CMD_OR,CMD_SUB,CMD_NOP};
 	    ignore_bins null_ops = {CMD_INV};
