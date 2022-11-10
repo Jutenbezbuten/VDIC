@@ -393,7 +393,7 @@ task send_msg(test_config_t no_args, test_config_t values, operation_t command);
 		data[data.size()-1]=temp;
 		//data={data,temp};
 	end
-	if (values==min) begin
+	else if (values==max) begin
 		for(int i=0;i<=no_of_args;i++)begin
 			temp=8'b11111111;
 			data= new [data.size() + 1] (data);
@@ -413,8 +413,10 @@ task send_msg(test_config_t no_args, test_config_t values, operation_t command);
 		data= new [data.size() + 1] (data);
 		data[data.size()-1]=temp;
 	end
-	for(int i=0; i<=(data.size()*8); i++)begin
-		data_cov[i]=0;
+	for(int i=0; i<=no_of_args+2; i++)begin
+		for (int j=0; j<=8; j++)begin
+			data_cov[(8*i)+j]=data[i][j];
+		end
 	end
 	case(curr_cmd)
 //		CMD_ERR : begin 
